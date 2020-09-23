@@ -6,6 +6,9 @@ import dev.vabalas.warehouseservice.error.ItemNotFoundException;
 import dev.vabalas.warehouseservice.repository.ItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,25 +25,25 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
-    public List<Item> getAllItems() {
-        LOGGER.info("getAllItems()");
-        return itemRepository.findAll();
+    public Page<Item> getAllItems(Pageable pageable) {
+        LOGGER.info("Getting all items");
+        return itemRepository.findAll(pageable);
     }
 
     public Item getOneItem(Integer id) {
-        LOGGER.info("getOneItem(id)");
+        LOGGER.info("Getting item with id " + id);
         return itemRepository.findById(id)
                 .orElseThrow(() -> new ItemNotFoundException("No item with id " + id));
     }
 
     public Item addOneItem(ItemDto itemDto) {
-        LOGGER.info("addOneItem(itemDto)");
+        LOGGER.info("Adding item " + itemDto);
         Item newItem = new Item(itemDto.getName(), itemDto.getQuantity(), itemDto.getExpirationDate());
         return itemRepository.save(newItem);
     }
 
     public Item updateOneItem(Integer id, ItemDto itemDto) {
-        LOGGER.info("updateOneItem(id, itemDto)");
+        LOGGER.info("Updating item with id " + id + ". Updates: " + itemDto);
         return itemRepository.findById(id).map(item -> {
             if (itemDto.getName() != null)
                 item.setName(itemDto.getName());
@@ -57,21 +60,23 @@ public class ItemService {
     }
 
     public void deleteOneItem(Integer id) {
-        LOGGER.info("deleteOneItem(id)");
+        LOGGER.info("Deleting item with id " + id);
         itemRepository.deleteById(id);
     }
 
-    public List<Item> getItemsWithQuantityLessThan(Integer amount) {
-        LOGGER.info("getItemsWithQuantityLessThan(amount)");
-        return itemRepository.findAll().stream()
+    public Page<Item> getItemsWithQuantityLessThan(Integer amount, Pageable pageable) {
+        LOGGER.info("Getting items with quantity less than " + amount);
+        List<Item> items = itemRepository.findAll(pageable).stream()
                 .filter(item -> item.getQuantity() < amount)
                 .collect(Collectors.toList());
+        return new PageImpl<>(items, pageable, items.size());
     }
 
-    public List<Item> getItemsWithExpirationDateBefore(LocalDate date) {
-        LOGGER.info("getItemsWithExpirationDateBefore(date)");
-        return itemRepository.findAll().stream()
+    public Page<Item> getItemsWithExpirationDateBefore(LocalDate date,  Pageable pageable) {
+        LOGGER.info("Getting items with expiration date before " + date);
+        List<Item> items =  itemRepository.findAll(pageable).stream()
                 .filter(item -> item.getExpirationDate().isBefore(date))
                 .collect(Collectors.toList());
+        return new PageImpl<>(items, pageable, items.size());
     }
 }
