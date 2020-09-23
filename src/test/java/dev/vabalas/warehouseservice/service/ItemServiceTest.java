@@ -21,9 +21,9 @@ import java.util.List;
 class ItemServiceTest {
 
     List<Item> items = List.of(
-            new Item("Item 1", 1, LocalDate.parse("2019-12-31")),
-            new Item("Item 2", 5, LocalDate.parse("2020-12-31")),
-            new Item("Item 3", 10, LocalDate.parse("2021-12-31"))
+            new Item("Item 1", 1, LocalDate.parse("2000-12-31")),
+            new Item("Item 2", 10, LocalDate.parse("2010-12-31")),
+            new Item("Item 3", 100, LocalDate.parse("2020-12-31"))
     );
     Page<Item> itemsMock = new PageImpl<>(items, Pageable.unpaged(), items.size());
 
@@ -41,14 +41,14 @@ class ItemServiceTest {
     @Test
     void returns_correct_number_of_items_with_quantity_less_than() {
         Assertions.assertEquals(
-                itemService.getItemsWithQuantityLessThan(7, Pageable.unpaged()).getSize(),
+                itemService.getItemsWithQuantityLessThan(50, Pageable.unpaged()).getSize(),
                 2);
     }
 
     @Test
     void returns_correct_number_of_items_with_expiration_date_before() {
         Assertions.assertEquals(
-                itemService.getItemsWithExpirationDateBefore(LocalDate.parse("2021-04-01"), Pageable.unpaged()).getSize(),
+                itemService.getItemsWithExpirationDateBefore(LocalDate.parse("2015-12-31"), Pageable.unpaged()).getSize(),
                 2);
     }
 }
