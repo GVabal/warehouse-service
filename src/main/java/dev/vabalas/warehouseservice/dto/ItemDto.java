@@ -1,11 +1,15 @@
 package dev.vabalas.warehouseservice.dto;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class ItemDto {
 
+    @NotNull
     private String name;
+    @NotNull
     private Integer quantity;
+    @NotNull
     private LocalDate expirationDate;
 
     public ItemDto() { }

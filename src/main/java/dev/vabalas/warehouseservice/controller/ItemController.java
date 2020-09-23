@@ -5,6 +5,7 @@ import dev.vabalas.warehouseservice.entity.Item;
 import dev.vabalas.warehouseservice.service.ItemService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class ItemController {
     }
 
     @PostMapping
-    public Item addOne(@RequestBody ItemDto itemDto) {
+    public Item addOne(@RequestBody @Valid ItemDto itemDto) {
         return itemService.addOneItem(itemDto);
     }
 
@@ -43,12 +44,12 @@ public class ItemController {
         itemService.deleteOneItem(id);
     }
 
-    @GetMapping("with/quantityLessThan/{amount}")
+    @GetMapping("withQuantityLessThan/{amount}")
     public List<Item> getAllWithQuantityLessThan(@PathVariable Integer amount) {
         return itemService.getItemsWithQuantityLessThan(amount);
     }
 
-    @GetMapping("with/expirationDateBefore/{date}")
+    @GetMapping("withExpirationDateBefore/{date}")
     public List<Item> getAllWithExpirationDateBefore(@PathVariable String date) {
         return itemService.getItemsWithExpirationDateBefore(LocalDate.parse(date));
     }
