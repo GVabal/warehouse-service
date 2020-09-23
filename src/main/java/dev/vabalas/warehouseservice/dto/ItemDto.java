@@ -31,4 +31,14 @@ public class ItemDto {
     public LocalDate getExpirationDate() {
         return expirationDate;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("ItemDto{");
+        sb.append("name='").append(name).append('\'');
+        sb.append(", quantity=").append(quantity);
+        sb.append(", expirationDate=").append(expirationDate);
+        sb.append('}');
+        return sb.toString();
+    }
 }
