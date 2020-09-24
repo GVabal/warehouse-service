@@ -20,7 +20,8 @@ public class Item {
     @Column(name = "EXP_DATE")
     private LocalDate expirationDate;
 
-    protected Item() { }
+    protected Item() {
+    }
 
     public Item(String name, Integer quantity, LocalDate expirationDate) {
         this.name = name;

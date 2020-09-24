@@ -41,37 +41,37 @@ public class ItemController {
 
     @GetMapping("{id}")
     public EntityModel<Item> getOne(@PathVariable Integer id) {
-        LOGGER.info("GET /items/" + id);
+        LOGGER.info("GET /items/{}", id);
         return assembler.toModel(itemService.getOneItem(id));
     }
 
     @PostMapping
     public EntityModel<Item> addOne(@RequestBody @Valid ItemDto itemDto) {
-        LOGGER.info("POST /items with body: " + itemDto);
+        LOGGER.info("POST /items with body: {}", itemDto);
         return assembler.toModel(itemService.addOneItem(itemDto));
     }
 
     @PutMapping("{id}")
     public EntityModel<Item> updateOne(@PathVariable Integer id, @RequestBody ItemDto itemDto) {
-        LOGGER.info("PUT /items/" + id + " with body: " + itemDto);
+        LOGGER.info("PUT /items/{} with body: {}", id, itemDto);
         return assembler.toModel(itemService.updateOneItem(id, itemDto));
     }
 
     @DeleteMapping("{id}")
     public void deleteOne(@PathVariable Integer id) {
-        LOGGER.info("DELETE /items/" + id);
+        LOGGER.info("DELETE /items/{}", id);
         itemService.deleteOneItem(id);
     }
 
     @GetMapping("withQuantityLessThan/{amount}")
     public PagedModel<EntityModel<Item>> getAllWithQuantityLessThan(@PathVariable Integer amount, Pageable pageable) {
-        LOGGER.info("GET /items/withQuantityLessThan/" + amount);
+        LOGGER.info("GET /items/withQuantityLessThan/{}", amount);
         return pagedAssembler.toModel(itemService.getItemsWithQuantityLessThan(amount, pageable), assembler);
     }
 
     @GetMapping("withExpirationDateBefore/{date}")
     public PagedModel<EntityModel<Item>> getAllWithExpirationDateBefore(@PathVariable String date, Pageable pageable) {
-        LOGGER.info("GET /items/withExpirationDateBefore/" + date);
+        LOGGER.info("GET /items/withExpirationDateBefore/{}", date);
         return pagedAssembler.toModel(itemService.getItemsWithExpirationDateBefore(LocalDate.parse(date), pageable), assembler);
     }
 

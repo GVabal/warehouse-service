@@ -17,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @ExtendWith(MockitoExtension.class)
 class ItemServiceTest {
 
@@ -40,15 +42,11 @@ class ItemServiceTest {
 
     @Test
     void returns_correct_number_of_items_with_quantity_less_than() {
-        Assertions.assertEquals(
-                itemService.getItemsWithQuantityLessThan(50, Pageable.unpaged()).getSize(),
-                2);
+        assertEquals(2, itemService.getItemsWithQuantityLessThan(50, Pageable.unpaged()).getSize());
     }
 
     @Test
     void returns_correct_number_of_items_with_expiration_date_before() {
-        Assertions.assertEquals(
-                itemService.getItemsWithExpirationDateBefore(LocalDate.parse("2015-12-31"), Pageable.unpaged()).getSize(),
-                2);
+        assertEquals(2, itemService.getItemsWithExpirationDateBefore(LocalDate.parse("2015-12-31"), Pageable.unpaged()).getSize());
     }
 }

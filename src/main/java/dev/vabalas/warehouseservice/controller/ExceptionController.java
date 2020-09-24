@@ -20,7 +20,7 @@ public class ExceptionController {
     @ExceptionHandler(ItemNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     String itemNotFoundHandler(ItemNotFoundException e) {
-        LOGGER.info("ItemNotFoundException handled: " + e.getMessage());
+        LOGGER.info("ItemNotFoundException handled: {}", e.getMessage());
         return e.getMessage();
     }
 
@@ -28,7 +28,7 @@ public class ExceptionController {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     String methodArgumentNotValidHandler(MethodArgumentNotValidException e) {
-        LOGGER.info("MethodArgumentNotValidException handled: " + e.getMessage());
+        LOGGER.info("MethodArgumentNotValidException handled: {}", e.getMessage());
         return e.getMessage();
     }
 
@@ -36,15 +36,15 @@ public class ExceptionController {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     String httpMessageNotReadableHandler(HttpMessageNotReadableException e) {
-        LOGGER.info("HttpMessageNotReadableException handled: " + e.getMessage());
-        return e.getCause().getMessage();
+        LOGGER.info("HttpMessageNotReadableException handled: {}", e.getMessage());
+        return e.getMessage();
     }
 
     @ResponseBody
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     String httpServerErrorHandler(Exception e) {
-        LOGGER.info("Exception handled: " + e.getMessage());
+        LOGGER.info("Exception handled: {}", e.getMessage());
         return e.getMessage();
     }
 

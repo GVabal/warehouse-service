@@ -12,7 +12,8 @@ public class ItemDto {
     @NotNull
     private LocalDate expirationDate;
 
-    public ItemDto() { }
+    public ItemDto() {
+    }
 
     public ItemDto(String name, Integer quantity, LocalDate expirationDate) {
         this.name = name;
