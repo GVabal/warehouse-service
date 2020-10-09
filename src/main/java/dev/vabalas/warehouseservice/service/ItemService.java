@@ -61,7 +61,8 @@ public class ItemService {
 
     public void deleteOneItem(Integer id) {
         LOGGER.info("Deleting item with id {}", id);
-        itemRepository.deleteById(id);
+        Item item = getOneItem(id);
+        itemRepository.delete(item);
     }
 
     public Page<Item> getItemsWithQuantityLessThan(Integer amount, Pageable pageable) {
