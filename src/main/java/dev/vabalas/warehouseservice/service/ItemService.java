@@ -66,17 +66,11 @@ public class ItemService {
 
     public Page<Item> getItemsWithQuantityLessThan(Integer amount, Pageable pageable) {
         LOGGER.info("Getting items with quantity less than {}", amount);
-        List<Item> items = itemRepository.findAll(pageable).stream()
-                .filter(item -> item.getQuantity() < amount)
-                .collect(Collectors.toList());
-        return new PageImpl<>(items, pageable, items.size());
+        return itemRepository.findAllWithQuantityLessThan(amount, pageable);
     }
 
     public Page<Item> getItemsWithExpirationDateBefore(LocalDate date, Pageable pageable) {
         LOGGER.info("Getting items with expiration date before {}", date);
-        List<Item> items = itemRepository.findAll(pageable).stream()
-                .filter(item -> item.getExpirationDate().isBefore(date))
-                .collect(Collectors.toList());
-        return new PageImpl<>(items, pageable, items.size());
+        return itemRepository.findAllWithExpirationDateBefore(date, pageable);
     }
 }
